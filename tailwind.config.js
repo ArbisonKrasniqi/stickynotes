@@ -1,18 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./public/**/*/html', './src/**/*.{js,jsx}'],
+  content: [
+    './public/**/*.{html,js}', // Include .html files in public directory
+    './src/**/*.{js,jsx}' // Include .js and .jsx files in src directory
+  ],
   theme: {
     extend: {
       colors: {
-        costumColor: '#515151',
-        customColor: '#2C4167',
+        light: '#F0E9E6',
+        dark: '#191F25',
+        lighterDark: '#272E36',
+        gray: '5B5D62',
+        lighterGray: '9095A1'
       }
     },
   },
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./public/index.html",
-  ],
-  theme: {},
   plugins: [],
 };

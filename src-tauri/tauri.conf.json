@@ -16,14 +16,31 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
       }
+      
     },
     "windows": [
       {
+        "decorations": false,
+        "transparent": false,
         "title": "stickynotes",
-        "width": 800,
-        "height": 600
+        "width": 300,
+        "height": 400,
+        "minWidth": 200,
+        "minHeight": 300
       }
+      
     ],
     "security": {
       "csp": null
