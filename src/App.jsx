@@ -3,32 +3,41 @@ import MainTitleBar from "./assets/MainTitleBar";
 import MainFooter from "./assets/MainFooter";
 import NotesList from "./assets/NotesList/NotesList";
 import NotesItem from "./assets/NotesList/NotesItem";
-import { createContext, useState } from "react";
-
-
-export const MainContext = createContext();
+import { createContext, useState, useEffect } from "react";
+import { invoke } from "@tauri-apps/api";
+import { listen } from '@tauri-apps/api/event';
+import StickyNote from "./Windows/StickyNote/StickyNote";
+import Settings from "./Windows/Settings/Settings";
+import CreateNote from "./Windows/CreateNote/CreateNote";
+import { getCurrent } from '@tauri-apps/api/window'; // Import getCurrent from Tauri API
+import StickyNotes from "./Windows/StickyNotes/StickyNotes";
 
 function App() {
+  const [title, setTitle] = useState(""); // Set a default title
 
-  const [notesLocation ,setNotesLocation] = useState('/home/rbee/Desktop/stickynotes');
-  const configValues = {notesLocation, setNotesLocation};
+  // Fetch the current window title
+  const fetchWindowTitle = async () => {
+    const window = await getCurrent();
+    const windowTitle = await window.title(); // Get the window title
+    setTitle(windowTitle);
+    console.log("Current window title:", windowTitle); // Log the window title
+  };
 
-  const contextValue = {configValues};
-  return (
-    <MainContext.Provider value={contextValue}>
-      <div 
-      style={{ fontFamily: 'Poppins, Roboto' }}
-      className="relative flex flex-col bg-light min-h-[150px] w-full h-full p-0 m-0">
-        <MainTitleBar/>
-          <NotesList>
-            <NotesItem data="asdasidawd" title="Sticky note title" color="#ffbf18"/>
-            <NotesItem data="asdasidawd" title="Sticky note title" color="#ffbf18"/>
-            <NotesItem data="asdasidawd" title="Sticky note title" color="#ffbf18"/>
-          </NotesList>
-        <MainFooter/>
-      </div>
-    </MainContext.Provider>
-  );
+  useEffect(() => {
+    fetchWindowTitle();
+  })
+
+  switch (title) {
+    case "stickynotes":
+      return <StickyNotes/>;
+    case "Settings":
+      return <Settings/>;
+    case "create":
+      return <CreateNote/>;
+    default:
+      return <StickyNote/>;
+  }
+
 }
 
 export default App;

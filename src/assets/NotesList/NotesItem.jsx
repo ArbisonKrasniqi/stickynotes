@@ -1,9 +1,16 @@
 import { IoTrash } from "react-icons/io5";
+import { createWindow } from "../../Hooks/FetchHooks";
 
-const NotesItem = ({title, data, color}) => {
+const NotesItem = ({title, data, color, width, height}) => {
+
+    const openStickyNote = async () => {
+        await createWindow(title+"", "index.html", width, height);
+    };
+
     return (
-        <div className="flex flex-row flex-nowrap w-[97%] p-0 m-[1.5%] min-h-[100px] max-h-[200px] shadow-md rounded-md h-auto flex-shrink-0"
-        style={{ backgroundColor: color }}>
+        <div className="flex flex-row flex-nowrap w-[97%] p-0 m-[1.5%] min-h-[100px] max-h-[150px] shadow-md rounded-md h-auto flex-shrink-0"
+        style={{ backgroundColor: color }}
+        onClick={openStickyNote}>
             
             {/*LEFT SIDE */}
             <div className="mt-1 mb-1 flex flex-col flex-nowrap w-[90%] h-auto overflow-y-auto">
@@ -11,7 +18,10 @@ const NotesItem = ({title, data, color}) => {
                 <h1 className="m-[2.5%] w-[95%] break-words font-bold">{title}</h1>
                 
                 {/*Content*/}
-                <p className="m-[2.5%] w-[95%] h-auto break-words">{data}</p>
+                <div 
+                    className="m-[2.5%] w-[95%] h-auto break-words" 
+                    dangerouslySetInnerHTML={{ __html: data }} // Render HTML content
+                />
             </div>
 
             {/*RIGHT SIDE */}

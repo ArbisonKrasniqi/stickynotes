@@ -1,16 +1,9 @@
 import { IoAdd } from "react-icons/io5";
-import { useContext } from "react";
-import { MainContext } from "../App";
-import { invoke } from "@tauri-apps/api";
-import { openNewNoteWindow } from "../Hooks/FetchHooks";
+import { createWindow} from "../Hooks/FetchHooks";
 const MainFooter = () => {  
     
     const openWindow = async () => {
-        try {
-            await openNewNoteWindow("create", "newNoteWindow.html");
-        } catch (error) {
-            console.log(error);
-        }
+        await createWindow("create", "index.html", 250.0, 350.0);
     }
 
     return(

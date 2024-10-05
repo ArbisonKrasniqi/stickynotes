@@ -15,6 +15,8 @@ body, html, #root {
     width: 100%;
     height: 100%;
 }
+
+
 .main-title-bar {
     -webkit-user-select: none;
     -webkit-app-region: drag; /* Allows you to drag the window */
@@ -22,4 +24,35 @@ body, html, #root {
   
 .main-title-bar-buttons button {
     -webkit-app-region: no-drag; /* Exclude buttons from dragging */
+}
+
+.tiptap, .tiptap input, .tiptap textarea, .tiptap:focus {
+  outline: none;
+  height: 100%;
+}
+
+.tiptap:focus {
+  box-shadow: none;
+}
+
+.tiptap div {
+  height: 90%;
+  width: 100%
+}
+
+.tiptap pre {
+  background: #191F25;
+  border-radius: 0.5rem;
+  color: #F0E9E6;
+  font-family: 'JetBrainsMono', monospace;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  code {
+    background: none;
+    color: inherit;
+    font-size: 0.8rem;
+    padding: 0;
+  }
 }

@@ -10,10 +10,35 @@ module.exports = {
         light: '#F0E9E6',
         dark: '#191F25',
         lighterDark: '#272E36',
-        gray: '5B5D62',
-        lighterGray: '9095A1'
+        gray: '#5B5D62',
+        lighterGray: '#9095A1' // Corrected color code
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    function ({ addComponents }) {
+      addComponents({
+        '.prose': {
+          lineHeight: '1.4', // Set line height for prose elements
+          'p': {
+            lineHeight: '1.4', // Set specific line height for paragraphs
+          },
+          'blockquote': {
+            lineHeight: '1.4', // Set specific line height for blockquotes
+          },
+          'ul': {
+            'li': {
+              lineHeight: '1.4', // Set specific line height for unordered list items
+            },
+          },
+          'ol': {
+            'li': {
+              lineHeight: '1.4', // Set specific line height for ordered list items
+            },
+          },
+        },
+      });
+    }
+  ],
 };

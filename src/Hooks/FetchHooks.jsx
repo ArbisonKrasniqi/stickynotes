@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api";
 
-export async function createFile(filename, location, content) {
-      await invoke('create_text_file', { filename, location, content })
+export async function createFile(title, color) {
+      await invoke('create_stickynote', { title, color })
       .then((response) => {
         console.log(response);
       })
@@ -12,11 +12,31 @@ export async function createFile(filename, location, content) {
   
 //Title of the window in OS
 //File is the html file in ./public which will host the JSX files
-export async function openNewNoteWindow(title, file) {
+//Min width x length: 200.0, 300.0 respectively
+export async function createWindow(title, file, width, length) {
   try {
-    await invoke('create_note_window', {title, file});
+    await invoke('create_window', {title, file, width, length});
     console.log('New note window created');
   } catch (error) {
     console.error('Failed to create window:', error);
+  }
+}
+
+export async function getStickyNotes() {
+  try {
+    const notes = await invoke('get_sticky_notes');
+    return notes;
+  } catch (error) {
+    console.error('Failed to fetch notes: ', error);
+  }
+}
+
+export async function getNoteData(title) {
+  try {
+    // Pass the argument as an object with the key `noteName`
+    const note = await invoke('get_sticky_note_data', { title: title });
+    return note;
+  } catch (error) {
+    console.error('Failed to get data', error);
   }
 }

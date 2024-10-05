@@ -1,7 +1,8 @@
 import "../../App.css";
-import MainTitleBar from "../../assets/MainTitleBar";
+import TitleBar from "../../assets/SimpleTitleBar";
 import { useState } from "react";
 import { createFile } from "../../Hooks/FetchHooks";
+import { appWindow } from "@tauri-apps/api/window"
 
 function CreateNote(){
   
@@ -17,7 +18,7 @@ function CreateNote(){
   const [errorMessage, setErrorMessage] = useState('');
 
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
     if (title.trim() === '') {
       setErrorMessage('Title is required.');
@@ -26,7 +27,8 @@ function CreateNote(){
     setErrorMessage('');
   
     try {
-      createFile(title, '/home/rbee/Desktop/stickynotes', "Test content");
+      await createFile(title, color);
+      await appWindow.close();
     } catch (error) {
       if (error.message) setErrorMessage(error.message);
     }
@@ -37,7 +39,7 @@ function CreateNote(){
     style={{ fontFamily: 'Poppins, Roboto' }}
     className="relative flex flex-col bg-light w-full h-full p-0 m-0"
     >
-      <MainTitleBar/>
+      <TitleBar/>
       <form class="h-[auto] w-full mt-6 mb-6 flex flex-col items-center justify-center" onSubmit={handleCreate}>
         <div className="flex flex-row h-[40px] w-[80%] mb-6">
           <input type="text"
