@@ -1,11 +1,16 @@
 import { IoTrash } from "react-icons/io5";
-import { createWindow } from "../../Hooks/FetchHooks";
+import { createWindow, deleteStickyNote } from "../../Hooks/FetchHooks";
 
 const NotesItem = ({title, data, color, width, height}) => {
 
     const openStickyNote = async () => {
         await createWindow(title+"", "index.html", width, height);
     };
+
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+        deleteStickyNote(title);
+    }
 
     return (
         <div className="flex flex-row flex-nowrap w-[97%] p-0 m-[1.5%] min-h-[100px] max-h-[150px] shadow-md rounded-md h-auto flex-shrink-0"
@@ -25,10 +30,10 @@ const NotesItem = ({title, data, color, width, height}) => {
             </div>
 
             {/*RIGHT SIDE */}
-            <div className="flex justify-center w-[10]">
+            <div className="flex justify-center w-[10%]">
                 <div className="m-[8px] flex justify-center items-center h-[30px] w-[30px] rounded-md
                 text-lighterDark hover:bg-lighterDark hover:text-light transition-colors duration-150 ease-in-out ">
-                    <IoTrash className=" h-[22px] w-[22px] "/>
+                    <IoTrash className=" h-[22px] w-[22px] "onClick={handleDelete}/>
                 </div>
                 
             </div>

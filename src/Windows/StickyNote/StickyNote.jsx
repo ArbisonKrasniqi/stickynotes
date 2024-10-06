@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import TitleBar from "../../assets/SimpleTitleBar";
 import { appWindow } from '@tauri-apps/api/window';
 import { useState } from "react";
-import { EditorProvider} from '@tiptap/react'
+import { listen } from '@tauri-apps/api/event';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit'
 import "../../App.css";
 import { getNoteData } from "../../Hooks/FetchHooks";
 import { invoke } from "@tauri-apps/api";
 import UseWindowDimensions from "../../Hooks/UseWindowDimensions";
-import { useContext } from "react";
+
 
 const StickyNote = () => {
   const [windowTitle, setWindowTitle] = useState('');
@@ -122,6 +122,25 @@ const StickyNote = () => {
     };
 
   }, [newContent, width, height]);
+
+  
+  useEffect(() => {
+    const unlistenDelete = listen('sticky-note-deleted', (event) => {
+      const { note_title } = event.payload; // Extract the note title from the event payload
+    
+      console.log(`Sticky note deleted: ${note_title}`);
+    
+      if (note_title === windowTitle) {
+        // If the deleted sticky note is the one that is currently open, close the window
+        console.log('This sticky note is currently open, closing the window.');
+        appWindow.close();
+      }
+    });
+  
+    return () => {
+      unlistenDelete.then((unsubscribe) => unsubscribe());
+    };
+  }, [windowTitle]);
 
   return (
     <div

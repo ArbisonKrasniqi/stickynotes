@@ -33,10 +33,16 @@ const StickyNotes = () => {
         const unlistenUpdate = listen('sticky-note-updated', () => {
             console.log("Sticky note updated!");
             fetchStickyNotes();
-        });    
+        });
+        
+        const unlistenDelete = listen('sticky-note-deleted', () => {
+          console.log("Sticky note deleted!");
+          fetchStickyNotes();
+      }); 
         return () => {
             unlistenCreate.then(unsubscribe => unsubscribe());
             unlistenUpdate.then(unsubscribe => unsubscribe());
+            unlistenDelete.then(unsubscribe => unsubscribe());
         };
     }, []);
     

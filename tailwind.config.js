@@ -23,18 +23,24 @@ module.exports = {
           lineHeight: '1.4', // Set line height for prose elements
           'p': {
             lineHeight: '1.4', // Set specific line height for paragraphs
+            margin: '0.25em', // Reduce margin between paragraphs
           },
           'blockquote': {
             lineHeight: '1.4', // Set specific line height for blockquotes
+            margin: '0.25em', // Reduce margin between blockquotes and other elements
           },
           'ul': {
+            margin: '0.25em', // Reduce margin between unordered list and other elements
             'li': {
               lineHeight: '1.4', // Set specific line height for unordered list items
+              margin: '0.25em', // Reduce margin between list items
             },
           },
           'ol': {
+            margin: '0.25em', // Reduce margin between ordered list and other elements
             'li': {
               lineHeight: '1.4', // Set specific line height for ordered list items
+              margin: '0.25em', // Reduce margin between list items
             },
           },
         },

@@ -40,3 +40,11 @@ export async function getNoteData(title) {
     console.error('Failed to get data', error);
   }
 }
+
+export async function deleteStickyNote(title) {
+  try {
+    const response = await invoke('delete_sticky_note', {noteTitle: title+""})
+  } catch (error) {
+    console.error("Failed to delete note", error);
+  }
+}

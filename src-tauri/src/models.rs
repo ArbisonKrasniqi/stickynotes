@@ -16,5 +16,10 @@ pub struct StickyNote {
     pub length: f64,
     pub content: Option<String>,
 }
+
+#[derive(serde::Serialize)]
+pub struct StickyNoteDeletedPayload {
+    pub note_title: String,
+}
     
     

@@ -8,6 +8,7 @@ use std::fs;
 use std::fs::OpenOptions;
 use std::io::Write;
 use crate::repo;
+use std::path::PathBuf;
 
 #[tauri::command]
 pub fn greet(name: &str) -> String {
@@ -163,3 +164,37 @@ pub async fn update_sticky_note(app_handle: AppHandle, note: models::StickyNote)
         Err(e) => Err(format!("Failed to write to JSON file: {}", e)),
     }
 }
+
+#[tauri::command]
+pub fn delete_sticky_note(app_handle: AppHandle, note_title: String) -> Result<(), String> {
+    // Get the app data directory where your notes are stored
+    let config = app_handle.config();
+    let app_data_dir = app_data_dir(&config).ok_or("Failed to get app data directory")?;
+    
+    // Construct the file paths for .txt and .json files
+    let txt_file_path: PathBuf = app_data_dir.join(format!("stickynotes/{}.txt", note_title));
+    let json_file_path: PathBuf = app_data_dir.join(format!("stickynotes/{}.json", note_title));
+    
+    // Delete the .txt file
+    if txt_file_path.exists() {
+        fs::remove_file(&txt_file_path).map_err(|e| e.to_string())?;
+    }
+    
+    // Delete the .json file
+    if json_file_path.exists() {
+        fs::remove_file(&json_file_path).map_err(|e| e.to_string())?;
+    }
+
+
+    let payload = models::StickyNoteDeletedPayload {
+        note_title: note_title.clone(),
+    };
+    tauri::async_runtime::spawn(async move {
+        // Use app_handle to emit the event with a structured payload
+        app_handle.emit_all("sticky-note-deleted", &payload).unwrap();
+    });
+
+
+    Ok(())
+}
+

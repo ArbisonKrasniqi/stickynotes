@@ -33,7 +33,8 @@ fn main() {
                 controller::create_window,
                 controller::get_sticky_notes,
                 controller::get_sticky_note_data,
-                controller::update_sticky_note])
+                controller::update_sticky_note,
+                controller::delete_sticky_note])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
